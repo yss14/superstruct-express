@@ -1,0 +1,5 @@
+.github/
+.prettierrc
+.prettierignore
+jest.json
+src/
