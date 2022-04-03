@@ -1,0 +1,39 @@
+{
+  "name": "superstruct-express",
+  "version": "1.0.0",
+  "description": "Type-Safe Express Middleware for Superstruct Data Validation Library",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc",
+    "install-peers": "install-peers",
+    "postinstall": "npm run install-peers",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yss14/superstruct-express.git"
+  },
+  "keywords": [
+    "superstruct",
+    "express",
+    "middleware",
+    "validation",
+    "typesafe",
+    "typescript"
+  ],
+  "author": "Yannick Stachelscheid",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yss14/superstruct-express/issues"
+  },
+  "homepage": "https://github.com/yss14/superstruct-express#readme",
+  "devDependencies": {
+    "install-peers-cli": "^2.2.0",
+    "typescript": "^4.6.3"
+  },
+  "peerDependencies": {
+    "@types/express": "^4.x",
+    "express": "^4.x",
+    "superstruct": "^0.15.0"
+  }
+}

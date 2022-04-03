@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "outDir": "build/",
+    "declaration": true,
+    "rootDir": "src",
+    "baseUrl": "src",
+    "noUnusedLocals": true,
+    "noImplicitAny": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": false,
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "strict": true,
+    "skipDefaultLibCheck": true,
+    "sourceMap": true,
+    "esModuleInterop": true
+  },
+  "include": ["src/index.ts"],
+  "exclude": ["node_modules", "build"]
+}
