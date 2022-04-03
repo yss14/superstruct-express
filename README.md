@@ -1,7 +1,8 @@
 # superstruct-express
 
-[![PRs Welcome][prs-badge]][prs]
-[![MIT License][license-badge]][license]
+[![BuildTest](https://github.com/yss14/superstruct-express/actions/workflows/build.yaml/badge.svg?branch=main)](https://github.com/yss14/superstruct-express/actions/workflows/build.yaml)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)
 
 Type-Safe Express Middleware for Superstruct Data Validation Library
 
@@ -142,6 +143,3 @@ router.get(
 ## License
 
 MIT
-
-[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square
-[prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
