@@ -3,3 +3,4 @@
 .prettierignore
 jest.json
 src/
+scripts
