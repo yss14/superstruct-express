@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "install-peers": "install-peers",
-    "postinstall": "npm run install-peers",
+    "prepare": "install-peers",
     "test": "jest --config=jest.json --detectOpenHandles --colors",
     "test:watch": "jest --watch --config=jest.json --detectOpenHandles --colors",
     "prettify": "prettier --write . --config ./.prettierrc"
