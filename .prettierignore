@@ -1,0 +1,6 @@
+node_modules
+.husky
+.vscode
+build/
+./**/node_modules
+package-lock.json

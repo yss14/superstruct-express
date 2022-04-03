@@ -1,54 +1,51 @@
-import * as Express from "express";
-import { Struct, StructError, validate } from "superstruct";
+import * as Express from 'express'
+import { Struct, StructError, validate } from 'superstruct'
 
-type NonEmpty<Type> = [Type, ...Type[]];
+type NonEmpty<Type> = [Type, ...Type[]]
 
 const isErrorResult = <T>(
   validationResult: [StructError | undefined, T | undefined]
 ): validationResult is [StructError, undefined] =>
-  !!validationResult[0] && !validationResult[1];
+  !!validationResult[0] && !validationResult[1]
 
 export type TypedRequestHandler<TRequest extends Express.Request> = (
   request: TRequest,
   response: Express.Response,
   next: Express.NextFunction
-) => void | Promise<void>;
+) => void | Promise<void>
 
 export type ValidationErrorHandler<TRequest extends Express.Request> = (
   req: TRequest,
   validationError: StructError,
-  res: Express.Response,
-  next: Express.NextFunction
-) => void;
+  res: Express.Response
+) => void
 
 const defaultValidationErrorHandler: ValidationErrorHandler<Express.Request> = (
   _,
   validationError,
   res
 ) => {
-  const errors: Error[] = [];
+  const errors: { message: string }[] = []
 
   for (const err of validationError.failures()) {
-    errors.push(
-      new Error(
-        `Validation error for key <${err.key}> at ${err.path.join("->")}: ${
-          err.message
-        }`
-      )
-    );
+    errors.push({
+      message: `Validation error for key <${err.key}> at ${err.path.join(
+        '->'
+      )}: ${err.message}`,
+    })
   }
 
-  res.status(400).send({ errors });
+  res.status(400).send({ errors })
 
-  return;
-};
+  return
+}
 
 export type ValidatedRequestHandler<TRequest, TValidationResult> = (
   request: TRequest,
   validationResult: TValidationResult,
   response: Express.Response,
   next: Express.NextFunction
-) => void | Promise<void>;
+) => void | Promise<void>
 
 export const ValidatedRequest =
   <TRequest extends Express.Request, TValidationResult>(
@@ -60,14 +57,14 @@ export const ValidatedRequest =
     const validationResult = validate(req, validator, {
       coerce: true,
       mask: false,
-    });
+    })
 
     if (isErrorResult(validationResult)) {
-      return errorHandler(req, validationResult[0], res, next);
+      return errorHandler(req, validationResult[0], res)
     } else {
-      return handler(req, validationResult[1], res, next);
+      return handler(req, validationResult[1], res, next)
     }
-  };
+  }
 
 export type RESTMethod<TRequest extends Express.Request> = {
   <TRequestCustomization>(
@@ -76,12 +73,12 @@ export type RESTMethod<TRequest extends Express.Request> = {
     ...middleware: NonEmpty<
       TypedRequestHandler<TRequestCustomization & TRequest>
     >
-  ): TypedRouter<TRequest>;
+  ): TypedRouter<TRequest>
   (
     path: string,
     middleware: TypedRequestHandler<TRequest>
-  ): TypedRouter<TRequest>;
-};
+  ): TypedRouter<TRequest>
+}
 
 export interface TypedRouter<TRequest extends Express.Request> {
   use: (<TRequestCustomization>(
@@ -94,22 +91,22 @@ export interface TypedRouter<TRequest extends Express.Request> {
       ...middleware: TypedRequestHandler<
         TRequest & Partial<TRequestCustomization>
       >[]
-    ) => TypedRouter<TRequestCustomization & TRequest>);
-  get: RESTMethod<TRequest>;
-  put: RESTMethod<TRequest>;
-  post: RESTMethod<TRequest>;
-  patch: RESTMethod<TRequest>;
-  delete: RESTMethod<TRequest>;
-  head: RESTMethod<TRequest>;
-  move: RESTMethod<TRequest>;
-  options: RESTMethod<TRequest>;
-  trace: RESTMethod<TRequest>;
+    ) => TypedRouter<TRequestCustomization & TRequest>)
+  get: RESTMethod<TRequest>
+  put: RESTMethod<TRequest>
+  post: RESTMethod<TRequest>
+  patch: RESTMethod<TRequest>
+  delete: RESTMethod<TRequest>
+  head: RESTMethod<TRequest>
+  move: RESTMethod<TRequest>
+  options: RESTMethod<TRequest>
+  trace: RESTMethod<TRequest>
 }
 
 export const TypedRouter = <
   TRequest extends Express.Request
 >(): TypedRouter<TRequest> & Express.Router => {
-  const router = Express.Router();
+  const router = Express.Router()
 
-  return router as TypedRouter<TRequest> & Express.Router;
-};
+  return router as TypedRouter<TRequest> & Express.Router
+}
